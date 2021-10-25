@@ -20,7 +20,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import net.unknowndomain.alea.dice.standard.D6;
+import net.unknowndomain.alea.random.SingleResult;
+import net.unknowndomain.alea.random.dice.bag.D6;
 import net.unknowndomain.alea.roll.GenericResult;
 import net.unknowndomain.alea.roll.GenericRoll;
 
@@ -54,18 +55,21 @@ public class AGERoll implements GenericRoll
     @Override
     public GenericResult getResult()
     {
-        AGEResults results = buildResults(D6.INSTANCE.roll(), D6.INSTANCE.roll(), D6.INSTANCE.roll());
+        AGEResults results = buildResults(D6.INSTANCE.nextResult().get(), D6.INSTANCE.nextResult().get(), D6.INSTANCE.nextResult().get());
         results.setVerbose(mods.contains(AGEModifiers.VERBOSE));
         return results;
     }
     
-    private AGEResults buildResults(Integer res1, Integer res2, Integer res3)
+    private AGEResults buildResults(SingleResult<Integer> res1, SingleResult<Integer> res2, SingleResult<Integer> res3)
     {
         AGEResults results = new AGEResults(res1, res2, res3);
-        results.setTotal(res1 + res2 + res3 + bonus);
-        if ((Objects.equals(res1, res2)) || (Objects.equals(res1, res3)) || (Objects.equals(res2, res3)))
+        results.setTotal(res1.getValue() + res2.getValue() + res3.getValue() + bonus);
+        if (
+                (Objects.equals(res1.getValue(), res2.getValue())) || 
+                (Objects.equals(res1.getValue(), res3.getValue())) || 
+                (Objects.equals(res2.getValue(), res3.getValue())))
         {
-            results.setStuntPoints(res1);
+            results.setStuntPoints(res1.getValue());
         }
         return results;
     }

@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import net.unknowndomain.alea.messages.MsgBuilder;
 import net.unknowndomain.alea.messages.MsgStyle;
+import net.unknowndomain.alea.random.SingleResult;
 import net.unknowndomain.alea.roll.GenericResult;
 
 /**
@@ -29,20 +30,20 @@ import net.unknowndomain.alea.roll.GenericResult;
  */
 public class AGEResults extends GenericResult
 {
-    private final List<Integer> results;
-    private final Integer dragonDice;
+    private final List<SingleResult<Integer>> results;
+    private final SingleResult<Integer> dragonDice;
     private int total = 0;
     private int stuntPoints = 0;
     
-    public AGEResults(Integer ... actionResults)
+    public AGEResults(SingleResult<Integer> ... actionResults)
     {
-        List<Integer> tmp = new ArrayList<>();
+        List<SingleResult<Integer>> tmp = new ArrayList<>();
         tmp.addAll(Arrays.asList(actionResults));
         this.results = Collections.unmodifiableList(tmp);
         this.dragonDice = results.get(0);
     }
 
-    public List<Integer> getResults()
+    public List<SingleResult<Integer>> getResults()
     {
         return results;
     }
@@ -51,7 +52,7 @@ public class AGEResults extends GenericResult
     protected void formatResults(MsgBuilder messageBuilder, boolean verbose, int indentValue)
     {
         messageBuilder.append("Result: ").append(total);
-        messageBuilder.append(" | Dragon Dice: ").append(dragonDice).appendNewLine();
+        messageBuilder.append(" | Dragon Dice: ").append(dragonDice.getValue()).appendNewLine();
         if (stuntPoints > 0)
         {
             messageBuilder.append("Stunt Points: ").append(stuntPoints).appendNewLine();
@@ -61,16 +62,20 @@ public class AGEResults extends GenericResult
             messageBuilder.append("Roll ID: ").append(getUuid()).appendNewLine();
             messageBuilder.append("Results: ").append(" [ ");
             boolean first = true;
-            for (Integer t : getResults())
+            for (SingleResult<Integer> t : getResults())
             {
                 if (first)
                 {
-                    messageBuilder.append(t, MsgStyle.BOLD);
+                    messageBuilder.append(t.getLabel(), MsgStyle.BOLD);
+                    messageBuilder.append(" => ", MsgStyle.BOLD);
+                    messageBuilder.append(t.getValue(), MsgStyle.BOLD);
                     first = false;
                 }
                 else
                 {
-                    messageBuilder.append(t);
+                    messageBuilder.append(t.getLabel());
+                    messageBuilder.append(" => ");
+                    messageBuilder.append(t.getValue());
                 }
                 messageBuilder.append(" ");
             }
@@ -78,7 +83,7 @@ public class AGEResults extends GenericResult
         }
     }
 
-    public Integer getDragonDice()
+    public SingleResult<Integer> getDragonDice()
     {
         return dragonDice;
     }
