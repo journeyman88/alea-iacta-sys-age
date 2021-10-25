@@ -66,16 +66,14 @@ public class AGEResults extends GenericResult
             {
                 if (first)
                 {
-                    messageBuilder.append(t.getLabel(), MsgStyle.BOLD);
-                    messageBuilder.append(" => ", MsgStyle.BOLD);
-                    messageBuilder.append(t.getValue(), MsgStyle.BOLD);
+                    messageBuilder.append("( ", MsgStyle.BOLD).append(t.getLabel(), MsgStyle.BOLD).append(" => ", MsgStyle.BOLD);
+                    messageBuilder.append(t.getValue(), MsgStyle.BOLD).append(") ", MsgStyle.BOLD);
                     first = false;
                 }
                 else
                 {
-                    messageBuilder.append(t.getLabel());
-                    messageBuilder.append(" => ");
-                    messageBuilder.append(t.getValue());
+                    messageBuilder.append("( ").append(t.getLabel()).append(" => ");
+                    messageBuilder.append(t.getValue()).append(") ");
                 }
                 messageBuilder.append(" ");
             }
