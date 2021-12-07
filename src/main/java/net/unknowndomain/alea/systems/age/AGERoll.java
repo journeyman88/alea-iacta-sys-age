@@ -57,6 +57,7 @@ public class AGERoll implements GenericRoll
     {
         AGEResults results = buildResults(D6.INSTANCE.nextResult().get(), D6.INSTANCE.nextResult().get(), D6.INSTANCE.nextResult().get());
         results.setVerbose(mods.contains(AGEModifiers.VERBOSE));
+        results.setLang(lang);
         return results;
     }
     
