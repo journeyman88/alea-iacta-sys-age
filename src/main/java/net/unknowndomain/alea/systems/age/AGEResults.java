@@ -22,14 +22,16 @@ import java.util.List;
 import net.unknowndomain.alea.messages.MsgBuilder;
 import net.unknowndomain.alea.messages.MsgStyle;
 import net.unknowndomain.alea.random.SingleResult;
-import net.unknowndomain.alea.roll.GenericResult;
+import net.unknowndomain.alea.roll.LocalizedResult;
 
 /**
  *
  * @author journeyman
  */
-public class AGEResults extends GenericResult
+public class AGEResults extends LocalizedResult
 {
+    private final static String BUNDLE_NAME = "net.unknowndomain.alea.systems.age.RpgSystemBundle";
+    
     private final List<SingleResult<Integer>> results;
     private final SingleResult<Integer> dragonDice;
     private int total = 0;
@@ -51,16 +53,16 @@ public class AGEResults extends GenericResult
     @Override
     protected void formatResults(MsgBuilder messageBuilder, boolean verbose, int indentValue)
     {
-        messageBuilder.append("Result: ").append(total);
-        messageBuilder.append(" | Dragon Dice: ").append(dragonDice.getValue()).appendNewLine();
+        messageBuilder.append(translate("age.results.total", total));
+        messageBuilder.append(" | ").append(translate("age.results.dragonDice", dragonDice.getValue())).appendNewLine();
         if (stuntPoints > 0)
         {
-            messageBuilder.append("Stunt Points: ").append(stuntPoints).appendNewLine();
+            messageBuilder.append(translate("age.results.stuntPoints", stuntPoints)).appendNewLine();
         }
         if (verbose)
         {
             messageBuilder.append("Roll ID: ").append(getUuid()).appendNewLine();
-            messageBuilder.append("Results: ").append(" [ ");
+            messageBuilder.append(translate("age.results.diceResults")).append(" [ ");
             boolean first = true;
             for (SingleResult<Integer> t : getResults())
             {
@@ -104,6 +106,12 @@ public class AGEResults extends GenericResult
     public void setStuntPoints(int stuntPoints)
     {
         this.stuntPoints = stuntPoints;
+    }
+
+    @Override
+    protected String getBundleName()
+    {
+        return BUNDLE_NAME;
     }
 
 }
