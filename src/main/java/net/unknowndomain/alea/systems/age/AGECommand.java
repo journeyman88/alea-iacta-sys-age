@@ -61,7 +61,7 @@ public class AGECommand extends RpgSystemCommand
         else
         {
             AGEOptions opt = (AGEOptions) options;
-            AGERoll roll = new AGERoll(opt.getTotal(), opt.getModifiers());
+            AGERoll roll = new AGERoll(opt.getTotal(), lang, opt.getModifiers());
             retVal = Optional.of(roll);
         }
         return retVal;

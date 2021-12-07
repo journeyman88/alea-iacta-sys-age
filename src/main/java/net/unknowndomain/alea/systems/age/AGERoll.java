@@ -18,6 +18,7 @@ package net.unknowndomain.alea.systems.age;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import net.unknowndomain.alea.random.SingleResult;
@@ -31,18 +32,16 @@ import net.unknowndomain.alea.roll.GenericRoll;
  */
 public class AGERoll implements GenericRoll
 {
-    
-    
-    
+    private final Locale lang;
     private final int bonus;
     private final Set<AGEModifiers> mods;
     
-    public AGERoll(Integer bonus, AGEModifiers ... mod)
+    public AGERoll(Integer bonus, Locale lang, AGEModifiers ... mod)
     {
-        this(bonus, Arrays.asList(mod));
+        this(bonus, lang, Arrays.asList(mod));
     }
     
-    public AGERoll(Integer bonus, Collection<AGEModifiers> mod)
+    public AGERoll(Integer bonus, Locale lang, Collection<AGEModifiers> mod)
     {
         this.mods = new HashSet<>();
         if (mod != null)
@@ -50,6 +49,7 @@ public class AGERoll implements GenericRoll
             this.mods.addAll(mod);
         }
         this.bonus = bonus;
+        this.lang = lang;
     }
     
     @Override
