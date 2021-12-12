@@ -15,13 +15,6 @@
         The system specific implementation to support the RPGs based upon the "AGE System"
     </description>
     
-    <scm>
-        <connection>scm:git:git://github.com/journeyman88/alea-iacta-sys-age</connection>
-        <developerConnection>scm:git:ssh://git@github.com/journeyman88/alea-iacta-sys-age</developerConnection>
-        <url>https://github.com/journeyman88/alea-iacta-sys-age</url>
-        <tag>HEAD</tag>
-     </scm>
-    
     <repositories>
         <repository>
             <id>jitpack.io</id>
